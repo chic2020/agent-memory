@@ -127,3 +127,32 @@ The embedding + guard models are a possible fix for memory search being dead
 - Kilo, LLM7, Baseten, Gemini, Copilot — verified working
 - groq, cerebras, nvidia, anthropic — REMOVED 2026-10-05 for latency; all agent
   chains repointed. Do not reintroduce them.
+
+## NVIDIA SKILLS (build.nvidia.com/skills) — reviewed 2026-10-05
+
+Source repo: https://github.com/NVIDIA/skills (3,520 stars, NVIDIA-verified, Apache-2.0)
+Install method if ever wanted: `npx skills add nvidia/skills` (needs skills CLI >=1.5.16)
+
+**THIS BOX HAS NO NVIDIA GPU** (virtio only, no /dev/nvidia*, no CUDA). So the GPU
+skills are NOT installed - they would teach agents to use hardware that does not
+exist here. Install them on the Mac only if it has an NVIDIA card.
+
+- GPU-only, not installed: cuopt-* (6, routing/optimization), accelerated-computing-cudf,
+  dali-dynamic-modeling, deepstream-*, physical-ai-*, omniverse-* (3), nemo-automodel,
+  nemo-retriever, nemotron-customization, dynamo-router-starter
+- CPU-capable, not installed: rag-blueprint, rag-eval, data-designer, skill-card-generator,
+  cuaq-guide
+
+### SkillSpector — INSTALLED 2026-10-05 (this one matters)
+
+https://github.com/NVIDIA/SkillSpector (19,392 stars) - security scanner for agent skills.
+Detects prompt injection, data exfiltration, supply-chain risk, excessive agency,
+memory poisoning, SSRF, privilege escalation BEFORE a skill is installed.
+
+    skillspector scan <dir> --no-llm          # 6s single skill, ~292s for 20 skills on 1 CPU
+    skillspector scan <dir> --format json --output report.json
+
+Caveat found in testing: on this 1-CPU box, scanning a whole directory reports many
+analyzers as `degraded` with `reason_code: static_parse_limit`. Single-skill scans are
+clean. So scan skills ONE AT A TIME here, not a whole tree, or you get incomplete
+coverage that still looks like a pass. Use `--fail-on-incomplete` in any gate.
