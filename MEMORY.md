@@ -94,9 +94,16 @@ both pull only from their own npm/github releases). Both verified working.
 ### OVH AI Endpoints — FREE, no key, 24 models
 Base URL: `https://oai.endpoints.kepler.ai.cloud.ovh.net/v1` (OpenAI-compatible, unauthenticated)
 
-Verified live at 2026-10-05. Currently returns `API rate limit exceeded` on
-`/v1/chat/completions` for unauthenticated callers, so it is NOT wired into any
-agent chain yet. `/v1/models` works and lists:
+Verified live at 2026-10-05. Registered in openclaw.json as provider `ovh` (14 chat
+models, validated). HARD LIMIT: response headers show `x-ratelimit-limit-minute: 2`
+and `x-ratelimit-remaining-minute: 0`. The free tier allows **2 requests/minute** -
+this is a plan cap, NOT a missing key, so no credential lifts it. One agent turn
+costs several requests, so OVH is NOT wired into any agent chain. Use for one-off
+calls only, or with a paid AI Endpoints subscription (billing decision, needs chic).
+
+NOTE: `api.eu.ovhcloud.com/v1|v2` is the OVHcloud **infrastructure** API (servers,
+DNS, billing) - a completely different service. It does NOT affect AI Endpoints
+limits. `/v1/models` works and lists:
 
 - `Qwen3.8-27B` 262k ctx — replaces the dead groq/cerebras qwen3.8-27b ref
 - `Qwen3-Coder-30B-A3B-Instruct` 262k ctx — code work, good for `coder`
