@@ -74,12 +74,18 @@ Mac (16GB) or a new small VPS. Nothing here is installed.
 
 ---
 
-## REPOS TO REVIEW BEFORE INSTALL (chic, 2026-10-05)
+## SEARCH + BROWSER TOOLS — INSTALLED 2026-10-05
 
-Read first, show chic what the code does, then ask. Not installed.
+Reviewed before install per rule 4 (lifecycle scripts read, download hosts checked,
+both pull only from their own npm/github releases). Both verified working.
 
-- qmd — local search/recall over documents | https://github.com/tobi/qmd
-- agent-browser — browser automation for agents | https://github.com/vercel-labs/agent-browser
+- qmd 2.8.3 — local BM25+vector search over docs, MCP server included
+  https://github.com/tobi/qmd | `qmd search "kw"` / `qmd query "q"` / `qmd mcp`
+  Index: `agent-memory` collection -> this repo. Re-index with `qmd update`.
+- agent-browser 0.38.2 — headless Chrome CLI for agents, Chrome 154 installed
+  https://github.com/vercel-labs/agent-browser | `agent-browser open URL`, `get title`
+  MEMORY IS TIGHT: one page at a time, always `agent-browser close` after.
+  Wants Node >=24 (box has v22.22.1) - native binary works, JS wrapper may warn.
 
 ---
 
